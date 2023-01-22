@@ -1,20 +1,113 @@
-#!/bin/bash
-date
-#!/bin/bash
 
-# Run as: table.sh < {input-file-name} > {output-file-name}
-# The script requires a space-delimited data file to parse into an html table.
-# It does not automatically create a header row.
+#########################################
+# This script is to be used to clean up the output file      #
+# of the m2 tester.                                          #
+# settings you can adjust:                                   #
+# limit - Set to minimum pressure you want to extract        #
+#.           from data file.                                 #
+# ---------------------------------------------------------------------- #
+# idl-row-threshold - How many rows should be stored                     #
+#                                    between valid pressure rows.        #
+# -----------------------------------------------------------------------#
+# script output goes to readings-DATESTAMP.txt.                          #
+# -----------------------------------------------------------------------#
+# Messages
+FILE="FRCDISP1.TXT"
+message1="--m2Tester.file:--FRCDISP1.TXT--does--not--exist--"
+#declare -a Readings
+declare -i  counter=0
+# CHANGE THE FOLLOWING 2 VALUES ONLY
+limit=75
+idleRowThreshold=50
+# ---------------------------------------------------------------------
+idle_count=0
+TIMESTAMP=`date "+%Y-%m-%d-%H-%M-%S"`
+NAME=`echo "FRCDISP1.TXT" | cut -d'.' -f1`
+log=` echo "readings-$TIMESTAMP.txt"`
+logHtml=` echo "readings-$TIMESTAMP.html"`
+#touch $log $logHtml
+echo "m2Tester" >> $logHtml
+echo "m2Tester" >> $log
+echo " , ,Total Pressure:, Pressure 1:, Pressure 2:, Pressure 3:, Pressure 4:, Horizontal:" >> $log
+echo "<table>" >> $logHtml
+echo " <td>TimeStamp</td><dt>Date Time</dt> <td>Total Pressure:</td><td> Pressure 1:</td><td> Pressure 2:</td> <td>Pressure 3:</td><td> Pressure 4:</td><td> Horizontal:</td>" >> $logHtml
+# ----- IS THE TESTER FILE AVAILABLE ------
+FILE="FRCDISP1.TXT"
+if [ ! -f "$FILE" ]; then
+    echo "$FILE does not exist."
+    /home/pi/m2Tester/m2-script-message.py $message1
+    exit
+fi
+# ----------------------------
+# Create a timestamped copy of original data
+#cp $NAME.TXT $NAME-$TIMESTAMP.TXT
 
-echo \<table\>
-while read line; do
-    echo \<tr\>
-    for item in $line; do
-#	col=`echo $ln | awk -F, '{print$3}'`
-	temp=`echo $item | awk '{print$3"\<\/td\>\<td\>"$7"\<\/td\>\<td\>"$11"\<\/td\>\<td\>"$15"\<\/td\>\<td\>"$19"\<\/td\>\<td\>"$22"\<\/td\>}'`
-        echo \<td\>$item\<\/td\>
-	echo $temp
-    done
-    echo \<\/tr\>
+FILENAME="FRCDISP1.TXT"
+#echo $FILENAME
+totalRowCount=`cat $FILENAME | wc -l `
+totalRowCountStart=`cat $FILENAME | wc -l `
+
+# Timestamp for readings file
+
+fileTstamp=`date "+ %Y-%m-%d , %H:%M:%S ,"`
+#echo $fileTstamp
+
+LINES=$(cat $FILENAME)
+cat $FILENAME | while read line;
+#for LINE in $LINES
+do
+        ((++counter))
+#       PRINT ONE LINE OF FILE
+        ln=`sed -n "$counter"p $FILENAME`
+#       IS THE ROW ABOVE OR BELOW THRESHOLD
+        col=`echo $ln | awk '{print$3}'`
+#       CREATE timestamps for data row
+	fileTstamp=`date "+ %Y-%m-%d-%H:%M:%S "`
+        fileTstampLong=`date "+%Y%m%d%H%M%S%3N"`
+#       ISOLATE just the values
+        temp=`echo $ln | awk '{print$3","$7","$11","$15","$19","$22}'`
+	Readings=`echo "<tr><td>$fileTstampLong</td><td>$fileTstamp</td>"`
+        Readings=$Readings`echo $temp | awk -F, '{printf("<td>"$1"</td><td>"$2"</td><td>"$3"</td><td>"$4"</td><td>"$5"</td></tr>")}'`
+#	echo $Readings 
+        ln="$fileTstampLong,$fileTstamp,$temp"
+#       echo $col
+#	clear
+	printf "\n  Total Lines $totalRowCountStart Processing Row $counter Decrement counter = $totalRowCount "  
+	printf "\n  Beginning of Loop $counter "
+
+       if [ $(echo "$col > $limit " | bc) -eq 1 ]; then
+#               echo "$col is greater than $limit (linenumber $counter)"
+#                echo $ln >> $log
+#                echo $Readings >> $logHtml
+#                echo $ >> $log
+                idle_count=0
+               ((--totalRowCount))
+	printf \n "  Compare against col value $counter"
+        elif [ $(echo "$idle_count < $idleRowThreshold " | bc) -eq 1 ]; then
+ #               echo "$col is less than $idleRowThreshold - $idle_count  writing to file (linenumber $counter)"
+#                echo $ln >> $log
+#                echo $Readings >> $logHtml
+                ((++idle_count))
+               ((--totalRowCount))
+	printf \n " In the idle count loop $counter"
+
+#        elif  [ $(echo "$totalRowCount < 1 " | bc) -eq 1 ]; then
+#        elif  [ $totalRowCount -eq 1 ]; then
+         elif  [ $counter -eq 1 ]; then
+                echo " COMPLETED "
+#		echo "</table>" >> $logHtml
+	printf \n " Are we done ? $counter"
+                  break 
+		  exit 1
+        else
+#                echo "$col is less than $limit (linenumber $counter)"
+                ((--totalRowCount))
+
+        fi
+#sleep 1
 done
-echo \<\/table\>
+#git add .
+#git commit -m 'Google Sheet Test 3' README.md 
+#git push git@github.com:vtjoe/m2Tester.git
+exit 0
+

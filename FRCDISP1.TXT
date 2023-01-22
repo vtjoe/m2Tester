@@ -1,0 +1,9 @@
+Total Pressure: 5.82 , Pressure 1: -7.27 , Pressure 2: 0.00 , Pressure 3: 11.64 , Pressure 4: 1.45 , Horizontal: 0.00 
+Total Pressure: 20.37 , Pressure 1: 2.91 , Pressure 2: 1.45 , Pressure 3: 13.09 , Pressure 4: 2.91 , Horizontal: 0.02 
+Total Pressure: 5.82 , Pressure 1: -2.91 , Pressure 2: -2.91 , Pressure 3: 8.73 , Pressure 4: 2.91 , Horizontal: 0.01 
+Total Pressure: 11.64 , Pressure 1: -1.45 , Pressure 2: 1.45 , Pressure 3: 11.64 , Pressure 4: 0.00 , Horizontal: -0.01 
+Total Pressure: 1.45 , Pressure 1: -2.91 , Pressure 2: 1.45 , Pressure 3: 0.00 , Pressure 4: 2.91 , Horizontal: 0.01 
+Total Pressure: 14.55 , Pressure 1: -4.36 , Pressure 2: 2.91 , Pressure 3: 13.09 , Pressure 4: 2.91 , Horizontal: 0.00 
+Total Pressure: 1.45 , Pressure 1: 1.45 , Pressure 2: 0.00 , Pressure 3: 1.45 , Pressure 4: -1.45 , Horizontal: 0.03 
+Total Pressure: 1.45 , Pressure 1: 0.00 , Pressure 2: 0.00 , Pressure 3: 0.00 , Pressure 4: 1.45 , Horizontal: 0.01 
+Total Pressure: 11.64 , Pressure 1: 0.00 , Pressure 2: -2.91 , Pressure 3: 11.64 , Pressure 4: 2.91 , Horizontal: 0.01 
