@@ -41,8 +41,10 @@ if [ ! -f "$FILE" ]; then
 fi
 # ----------------------------
 # IS THERE WIFI ?
+wifi=`ifconfig | grep "inet " | sed -n 2p | awk '{print$1"-"$2}'`
 /home/pi/m2Tester/m2-script-message.py $message2
 sleep 5
+/home/pi/m2Tester/m2-script-message.py $wifi
 # Create a timestamped copy of original data
 cp $NAME.TXT $NAME-$TIMESTAMP.TXT
 
