@@ -20,6 +20,16 @@
 <tr><td>20230122115656854</td><td>2023-01-22 11:56:56</td><td>1.45</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.45</td></tr>
 <tr><td>20230122115657214</td><td>2023-01-22 11:56:57</td><td>11.64</td><td>0.00</td><td>-2.91</td><td>11.64</td><td>2.91</td></tr>
 <tr> <td>TimeStamp</td><dt>Date Time</dt> <td>Total Pressure:</td><td> Pressure 1:</td><td> Pressure 2:</td> <td>Pressure 3:</td><td> Pressure 4:</td><td> Horizontal:</td></tr>
+<tr><td>20230122145447502</td><td>2023-01-22 14:54:47</td><td>5.82</td><td>-7.27</td><td>0.00</td><td>11.64</td><td>1.45</td></tr>
+<tr><td>20230122145447830</td><td>2023-01-22 14:54:47</td><td>20.37</td><td>2.91</td><td>1.45</td><td>13.09</td><td>2.91</td></tr>
+<tr><td>20230122145448097</td><td>2023-01-22 14:54:48</td><td>5.82</td><td>-2.91</td><td>-2.91</td><td>8.73</td><td>2.91</td></tr>
+<tr><td>20230122145448369</td><td>2023-01-22 14:54:48</td><td>11.64</td><td>-1.45</td><td>1.45</td><td>11.64</td><td>0.00</td></tr>
+<tr><td>20230122145448613</td><td>2023-01-22 14:54:48</td><td>1.45</td><td>-2.91</td><td>1.45</td><td>0.00</td><td>2.91</td></tr>
+<tr><td>20230122145448858</td><td>2023-01-22 14:54:48</td><td>14.55</td><td>-4.36</td><td>2.91</td><td>13.09</td><td>2.91</td></tr>
+<tr><td>20230122145449099</td><td>2023-01-22 14:54:49</td><td>1.45</td><td>1.45</td><td>0.00</td><td>1.45</td><td>-1.45</td></tr>
+<tr><td>20230122145449345</td><td>2023-01-22 14:54:49</td><td>1.45</td><td>0.00</td><td>0.00</td><td>0.00</td><td>1.45</td></tr>
+<tr><td>20230122145449619</td><td>2023-01-22 14:54:49</td><td>11.64</td><td>0.00</td><td>-2.91</td><td>11.64</td><td>2.91</td></tr>
+<tr> <td>TimeStamp</td><dt>Date Time</dt> <td>Total Pressure:</td><td> Pressure 1:</td><td> Pressure 2:</td> <td>Pressure 3:</td><td> Pressure 4:</td><td> Horizontal:</td></tr>
 <tr><td>20230122115641364</td><td>2023-01-22 11:56:41</td><td>5.82</td><td>-7.27</td><td>0.00</td><td>11.64</td><td>1.45</td></tr>
 <tr><td>20230122115641766</td><td>2023-01-22 11:56:41</td><td>20.37</td><td>2.91</td><td>1.45</td><td>13.09</td><td>2.91</td></tr>
 <tr><td>20230122115642138</td><td>2023-01-22 11:56:42</td><td>5.82</td><td>-2.91</td><td>-2.91</td><td>8.73</td><td>2.91</td></tr>
