@@ -1,4 +1,4 @@
-
+#!/bin/bash
 #########################################
 # This script is to be used to clean up the output file      #
 # of the m2 tester.                                          #
@@ -12,9 +12,13 @@
 # script output goes to readings-DATESTAMP.txt.                          #
 # -----------------------------------------------------------------------#
 # Messages
-FILE="FRCDISP1.TXT"
 message1="--m2Tester.file:--FRCDISP1.TXT--does--not--exist--"
-#declare -a Readings
+message2="--Checking.for.Wifi--"
+message3="--Concantenating.data--
+message4="--Sending.to.Github--
+message5="--Google.Sheets.refreshes.once.an.hour--"
+message6="--.--..--...--....--.....--......--......."
+FILE="FRCDISP1.TXT"
 declare -i  counter=0
 # CHANGE THE FOLLOWING 2 VALUES ONLY
 limit=75
@@ -27,7 +31,6 @@ log=` echo "readings-$TIMESTAMP.txt"`
 logHtml=` echo "readings-$TIMESTAMP.html"`
 touch $log $logHtml
 echo " , ,Total Pressure:, Pressure 1:, Pressure 2:, Pressure 3:, Pressure 4:, Horizontal:" >> $log
-#echo "<table>" >> $logHtml
 echo "<tr> <td>TimeStamp</td><dt>Date Time</dt> <td>Total Pressure:</td><td> Pressure 1:</td><td> Pressure 2:</td> <td>Pressure 3:</td><td> Pressure 4:</td><td> Horizontal:</td></tr>" >> $logHtml
 # ----- IS THE TESTER FILE AVAILABLE ------
 FILE="FRCDISP1.TXT"
@@ -37,6 +40,9 @@ if [ ! -f "$FILE" ]; then
     exit
 fi
 # ----------------------------
+# IS THERE WIFI ?
+/home/pi/m2Tester/m2-script-message.py $message2
+sleep 5
 # Create a timestamped copy of original data
 cp $NAME.TXT $NAME-$TIMESTAMP.TXT
 
@@ -106,10 +112,17 @@ done
 # Concatenate all the HTML readings
 rm README.md
 echo "<table>" >> README.md
+/home/pi/m2Tester/m2-script-message.py $message3
+sleep 5
 find . -type f -name 'readings-*.html' -exec cat {} + >> README.md
 #exit
-git add .
+/home/pi/m2Tester/m2-script-message.py $message4
+sleep 5
+git add --all
 git commit -m "Updating Google Sheet  $TIMESTAMP" README.md 
+git commit -m "Updating data $TIMESTAMP" readings* 
 git push git@github.com:vtjoe/m2Tester.git
+/home/pi/m2Tester/m2-script-message.py $message5
+sleep 5
 exit 0
 
