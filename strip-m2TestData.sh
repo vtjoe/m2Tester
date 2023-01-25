@@ -31,7 +31,7 @@ log=` echo "readings-$TIMESTAMP.txt"`
 logHtml=` echo "readings-$TIMESTAMP.html"`
 touch $log $logHtml
 echo " , ,Total Pressure:, Pressure 1:, Pressure 2:, Pressure 3:, Pressure 4:, Horizontal:" >> $log
-echo "<tr> <td>TimeStamp</td><dt>Date Time</dt> <td>Total Pressure:</td><td> Pressure 1:</td><td> Pressure 2:</td> <td>Pressure 3:</td><td> Pressure 4:</td><td> Horizontal:</td></tr>" >> $logHtml
+echo "<tr> <td>TimeStamp</td><td>Date Time</td><td>Total Pressure:</td><td>Pressure 1:</td><td>Pressure 2:</td><td>Pressure 3:</td><td>Pressure 4:</td><td>Horizontal:</td></tr>" >> $logHtml
 # ----- IS THE TESTER FILE AVAILABLE ------
 FILE="FRCDISP1.TXT"
 if [ ! -f "$FILE" ]; then
@@ -71,7 +71,7 @@ do
 #       ISOLATE just the values
         temp=`echo $ln | awk '{print$3","$7","$11","$15","$19","$22}'`
 	Readings=`echo "<tr><td>$fileTstampLong</td><td>$fileTstamp</td>"`
-        Readings=$Readings`echo $temp | awk -F, '{printf("<td>"$1"</td><td>"$2"</td><td>"$3"</td><td>"$4"</td><td>"$5"</td></tr>")}'`
+        Readings=$Readings`echo $temp | awk -F, '{printf("<td>"$1"</td><td>"$2"</td><td>"$3"</td><td>"$4"</td><td>"$5"</td><td>$6</td></tr>")}'`
 #	echo $Readings 
         ln="$fileTstampLong,$fileTstamp,$temp"
 #       echo $col
