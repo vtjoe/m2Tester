@@ -12,10 +12,11 @@
 # script output goes to readings-DATESTAMP.txt.                          #
 # -----------------------------------------------------------------------#
 # Messages
-message1="--m2Tester.file:--FRCDISP1.TXT--does--not--exist--"
+message1="--FRCDISP1.TXT--does--not--exist--"
 message2="--Checking.for.Wifi--"
-message3="--Concantenating.data--
-message4="--Sending.to.Github--
+message7="--PROCESSING--"
+message3="--Concantenating.data--"
+message4="--Sending.to.Github--"
 message5="--DONE !!--"
 message6="--.--..----......."
 FILE="FRCDISP1.TXT"
@@ -64,7 +65,8 @@ totalRowCount=`cat $FILENAME | wc -l `
 totalRowCountStart=`cat $FILENAME | wc -l `
 
 # Timestamp for readings file
-
+# Start Processing
+/home/pi/m2Tester/m2-script-message.py $message7
 fileTstamp=`date "+ %Y-%m-%d , %H:%M:%S ,"`
 #echo $fileTstamp
 
