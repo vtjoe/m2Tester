@@ -17,7 +17,7 @@ message2="--Checking.for.Wifi--"
 message3="--Concantenating.data--
 message4="--Sending.to.Github--
 message5="--DONE !!--"
-message6="--.--..--...--....--.....--......--......."
+message6="--.--..----......."
 FILE="FRCDISP1.TXT"
 declare -i  counter=0
 # CHANGE THE FOLLOWING 2 VALUES ONLY
@@ -139,7 +139,7 @@ sleep 5
 # Remove Tester file so its not processed again
 rm -f $FILENAME
 # Loop with Done message
-secs=1800                         # Set interval (duration) in seconds.
+secs=700                         # Set interval (duration) in seconds X 5 sec sleep.
 endTime=$(( $(date +%s) + secs )) # Calculate end time.
 while [ $(date +%s) -lt $endTime ]; do  # Loop until interval has elapsed.
 	/home/pi/m2Tester/m2-script-message.py $message5
