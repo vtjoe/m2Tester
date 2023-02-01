@@ -11,6 +11,8 @@
 # -----------------------------------------------------------------------#
 # script output goes to readings-DATESTAMP.txt.                          #
 # -----------------------------------------------------------------------#
+# ---- GO TO PROCESSING DIRECTORY -----#
+cd /home/pi/m2Tester
 # Messages
 message1="--FRCDISP1.TXT--does--not--exist--"
 message2="--Checking.for.Wifi--"
@@ -39,8 +41,9 @@ WGET="/usr/bin/wget"
 $WGET -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
 if [ ! -s /tmp/google.idx ]
 then
-/home/pi/m2Tester/m2-script-message.py "WIFI NOT CONNECTED"
-#    echo "Not Connected..!"
+	/home/pi/m2Tester/m2-script-message.py "WIFI NOT CONNECTED"
+#    	echo "Not Connected..!"
+	exit
 else
 	wifi=`ifconfig | grep "inet " | sed -n 2p | awk '{print$2".."}'`
 #       echo "Connected..!"
@@ -84,12 +87,12 @@ do
         temp=`echo $ln | awk '{print$3","$7","$11","$15","$19","$22}'`
         Readings=`echo "<tr><td>$fileTstampLong</td><td>$fileTstamp</td>"`
         Readings=$Readings`echo $temp | awk -F, '{printf("<td>"$1"</td><td>"$2"</td><td>"$3"</td><td>"$4"</td><td>"$5"</td><td>"$6"</td></tr>")}'`
-        echo $Readings
+#       echo $Readings
        ln="$fileTstampLong,$fileTstamp,$temp"
 #       echo $col
 #       clear
-        printf "\n  Total Lines $totalRowCountStart Processing Row $counter Decrement counter = $totalRowCount "
-        printf "\n  Beginning of Loop $counter "
+#       printf "\n  Total Lines $totalRowCountStart Processing Row $counter Decrement counter = $totalRowCount "
+#       printf "\n  Beginning of Loop $counter "
 
        if [ $(echo "$col > $limit " | bc) -eq 1 ]; then
 #               echo "$col is greater than $limit (linenumber $counter)"
@@ -98,21 +101,21 @@ do
 #                echo $ >> $log
                 idle_count=0
                ((--totalRowCount))
-        printf \n "  Compare against col value $counter"
+#        printf \n "  Compare against col value $counter"
         elif [ $(echo "$idle_count < $idleRowThreshold " | bc) -eq 1 ]; then
  #               echo "$col is less than $idleRowThreshold - $idle_count  writing to file (linenumber $counter)"
                 echo $ln >> $log
                 echo $Readings >> $logHtml
                 ((++idle_count))
                ((--totalRowCount))
-        printf \n " In the idle count loop $counter"
+#        printf \n " In the idle count loop $counter"
 
 #        elif  [ $(echo "$totalRowCount < 1 " | bc) -eq 1 ]; then
 #        elif  [ $totalRowCount -eq 1 ]; then
          elif  [ $counter -eq 1 ]; then
                 echo " COMPLETED "
                 echo "</table>" >> $logHtml
-        printf \n " Are we done ? $counter"
+#        printf \n " Are we done ? $counter"
                   break
                   exit 1
         else
@@ -133,10 +136,10 @@ find . -type f -name 'readings-*.html' -exec cat {} + >> README.md
 #exit
 /home/pi/m2Tester/m2-script-message.py $message4
 sleep 5
-git add --all
-git commit -m "Updating Google Sheet  $TIMESTAMP" README.md
-git commit -m "Updating data $TIMESTAMP" readings*
-git push git@github.com:vtjoe/m2Tester.git
+/usr/bin/sudo -u pi -H /usr/bin/git add --all
+/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating Google Sheet  $TIMESTAMP" README.md
+/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating data $TIMESTAMP" readings*
+/usr/bin/sudo -u pi -H /usr/bin/git push git@github.com:vtjoe/m2Tester.git
 sleep 5
 # Remove Tester file so its not processed again
 rm -f $FILENAME
