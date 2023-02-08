@@ -136,10 +136,13 @@ find . -type f -name 'readings-*.html' -exec cat {} + >> README.md
 #exit
 /home/pi/m2Tester/m2-script-message.py $message4
 sleep 5
-/usr/bin/sudo -u pi -H /usr/bin/git add --all
-/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating Google Sheet  $TIMESTAMP" README.md
-/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating data $TIMESTAMP" readings*
-/usr/bin/sudo -u pi -H /usr/bin/git push git@github.com:vtjoe/m2Tester.git
+git-processing-log=` echo "/home/pi/m2Tester/git-processing.$TIMESTAMP.log"`
+touch $git-processing
+git-processing-log=` echo "/home/pi/m2Tester/git-processing-$TIMESTAMP.log"`
+/usr/bin/sudo -u pi -H /usr/bin/git add --all >> $git-log 2>&1
+/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating Google Sheet  $TIMESTAMP" README.md >> $git-log 2>&1
+/usr/bin/sudo -u pi -H /usr/bin/git commit -m "Updating data $TIMESTAMP" readings* >> $git-log 2>&1
+/usr/bin/sudo -u pi -H /usr/bin/git push git@github.com:vtjoe/m2Tester.git >> $git-log 2>&1
 sleep 5
 # Remove Tester file so its not processed again
 rm -f $FILENAME
